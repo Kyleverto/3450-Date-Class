@@ -1,0 +1,50 @@
+# Build output
+/build/
+out/
+
+# CMake generated files
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+*.cmake
+
+# Compiled object files
+*.o
+*.obj
+*.lo
+*.la
+
+# Libraries
+*.a
+*.lib
+*.so
+*.dylib
+*.dll
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Debug / profiling files
+*.pdb
+*.dSYM/
+*.mod
+*.exp
+
+# IDE / editor settings
+.vscode/
+.idea/
+.settings/
+
+# Logs and temp files
+*.log
+*.swp
+*.tmp
+*.bak
+*.cache
+
+# GoogleTest / CTest
+Testing/
+CTestTestfile.cmake
