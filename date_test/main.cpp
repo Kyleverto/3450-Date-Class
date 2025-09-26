@@ -1,6 +1,6 @@
 #include <iostream>
 #include "gtest/gtest.h"
-#include "../date/date.hpp"
+#include "date.hpp"
 #include <sstream>
 
 using namespace util;
