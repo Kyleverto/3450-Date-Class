@@ -4,6 +4,9 @@ using std::cout;
 using std::endl;
 namespace util {
 
+    Date::Order Date::order = Date::Order::MonthDayYear;
+    std::string Date::separator = "/";
+
     Date::Date() {
         time_t t = 0 + (6 * 60 * 60);
         tm breakdown = *localtime(&t);
@@ -79,7 +82,18 @@ namespace util {
 
 
     void Date::print(std::ostream& out) {
-        out << _day << "/" << _month << "/" << _year << "\n";
+        if (order == Order::MonthDayYear) {
+            out << _month << separator << _day << separator << _year << "\n";
+        }
+        else {
+            if (order == Order::DayMonthYear) {
+                out << _day << separator << _month << separator << _year << "\n";
+            }
+            else {
+                out << _year << separator << _month << separator << _day << "\n";
+            }
+        }
+        
     }
 
     Date Date::now() {

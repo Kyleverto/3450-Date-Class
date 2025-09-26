@@ -1,6 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #pragma once
 #include <ctime>
+#include <string>
 
 namespace util {
     class Date {
@@ -10,10 +11,19 @@ namespace util {
             int month;
             int year;
         };
+        enum class Order {
+            MonthDayYear,
+            DayMonthYear,
+            YearMonthDay
+        };  
+
+        static Order order;
+        static std::string separator;
 
         Date();
         Date(int d, int mon, int yr);
         static Date now();
+
 
         void day(int value);
         int day();
@@ -39,10 +49,6 @@ namespace util {
         bool isValid(int d, int m, int y);
 
         
-        enum class Order {
-            MonthDayYear,
-            DayMonthYear,
-            YearMonthDay
-        };    
+    
     };
 }

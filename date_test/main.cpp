@@ -27,9 +27,32 @@ TEST(ValueCtor, InvalidDate){
     }
     catch(Date::Invalid e) {
         std::ostringstream out;
-        out << e.day << "/" << e.month << "/" << e.year << std::endl;
-        EXPECT_EQ(out.str(), "29/2/2001\n");
+        out << e.month << "/" << e.day << "/" << e.year << std::endl;
+        EXPECT_EQ(out.str(), "2/29/2001\n");
     }
+}
+
+TEST(print, CorrectFormat){
+    std::ostringstream out;
+    Date d{25, 12, 2024};
+    d.print(out);
+    EXPECT_EQ(out.str(), "12/25/2024\n");
+
+    Date::order = Date::Order::DayMonthYear;
+    Date::separator = "-";
+    out.str("");
+    d.print(out);
+    EXPECT_EQ(out.str(), "25-12-2024\n");
+
+    Date::order = Date::Order::YearMonthDay;
+    Date::separator = ".";
+    out.str("");
+    d.print(out);
+    EXPECT_EQ(out.str(), "2024.12.25\n");
+
+    Date::order = Date::Order::MonthDayYear;
+    Date::separator = "/";
+
 }
 
 TEST(Setters, SetValidDate){
@@ -40,7 +63,7 @@ TEST(Setters, SetValidDate){
     d.year(2024);
 
     d.print(out);
-    EXPECT_EQ(out.str(), "25/12/2024\n");
+    EXPECT_EQ(out.str(), "12/25/2024\n");
 }
 
 TEST(Setters, SetInvalidDate) {
@@ -51,8 +74,8 @@ TEST(Setters, SetInvalidDate) {
         x.month(13);
     }
     catch(Date::Invalid e) {
-        out << e.day << "/" << e.month << "/" << e.year << std::endl;
-        EXPECT_EQ(out.str(), "25/13/1970\n");
+        out << e.month << "/" << e.day << "/" << e.year << std::endl;
+        EXPECT_EQ(out.str(), "13/25/1970\n");
     }
 
     out.str("");
@@ -62,8 +85,8 @@ TEST(Setters, SetInvalidDate) {
         x.month(2);
     }
     catch(Date::Invalid e) {
-        out << e.day << "/" << e.month << "/" << e.year << std::endl;
-        EXPECT_EQ(out.str(), "29/2/1970\n");
+        out << e.month << "/" << e.day << "/" << e.year << std::endl;
+        EXPECT_EQ(out.str(), "2/29/1970\n");
     }
 }
 
@@ -71,7 +94,7 @@ TEST(Now, ReturnsCorrectTime) {
     std::ostringstream out;
     Date today = Date::now();
     today.print(out);
-    EXPECT_EQ(out.str(), "25/9/2025\n");
+    EXPECT_EQ(out.str(), "9/25/2025\n");
 }
 
 TEST(advance, MovesForward) {
@@ -80,13 +103,13 @@ TEST(advance, MovesForward) {
 
     d.advance();
     d.print(out);
-    EXPECT_EQ(out.str(), "7/4/2005\n");
+    EXPECT_EQ(out.str(), "4/7/2005\n");
 
     out.str("");
 
     d.advance(389);
     d.print(out);
-    EXPECT_EQ(out.str(), "1/5/2006\n");
+    EXPECT_EQ(out.str(), "5/1/2006\n");
 }
 
 TEST(advance, MovesBackwards){
@@ -95,11 +118,11 @@ TEST(advance, MovesBackwards){
 
     d.advance(-5);
     d.print(out);
-    EXPECT_EQ(out.str(), "1/4/2005\n");
+    EXPECT_EQ(out.str(), "4/1/2005\n");
 
     out.str("");
 
     d.advance(-366);
     d.print(out);
-    EXPECT_EQ(out.str(), "31/3/2004\n");
+    EXPECT_EQ(out.str(), "3/31/2004\n");
 }
