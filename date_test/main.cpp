@@ -27,7 +27,7 @@ TEST(ValueCtor, InvalidDate){
     }
     catch(Date::Invalid e) {
         std::ostringstream out;
-        out << e.month << "/" << e.day << "/" << e.year << std::endl;
+        out << e.month << "/" << e.day << "/" << e.year;
         EXPECT_EQ(out.str(), "2/29/2001");
     }
 }
@@ -76,8 +76,8 @@ TEST(Setters, SetInvalidDate) {
         x.month(13);
     }
     catch(Date::Invalid e) {
-        out << e.month << "/" << e.day << "/" << e.year << std::endl;
-        EXPECT_EQ(out.str(), "13/25/1970\n");
+        out << e.month << "/" << e.day << "/" << e.year;
+        EXPECT_EQ(out.str(), "13/25/1970");
     }
 
     out.str("");
@@ -103,7 +103,7 @@ TEST(Props, CorrectDayAndMonth){
     Date d = Date::now();
     std::ostringstream out;
 
-    out << d.dayName() << ", " << d.monthName() << " " << d.day() << std::endl;
+    out << d.dayName() << ", " << d.monthName() << " " << d.day();
     EXPECT_EQ(out.str(), "Friday, September 26");
 }
 
