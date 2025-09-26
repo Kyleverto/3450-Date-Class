@@ -2,7 +2,6 @@
 #include "date.hpp"
 using std::cout;
 using std::endl;
-using std::tm;
 namespace util {
 
     Date::Date() {
@@ -58,8 +57,28 @@ namespace util {
         return _year;
     }
 
+    void Date::advance(int days){
+        if(days != 0) {
+            time_t advancedSeconds;
+            int seconds = days * 24 * 60 * 60;
+            tm t{};
+            t.tm_mday = _day;       
+            t.tm_mon  = _month - 1;    
+            t.tm_year = _year - 1900;  
 
-    void Date::PrintDate(std::ostream& out) {
+            time_t currentSeconds = mktime(&t);
+            
+            advancedSeconds = currentSeconds + seconds;
+
+            tm breakdown = *localtime(&advancedSeconds);
+            _day = breakdown.tm_mday;
+            _month = breakdown.tm_mon + 1;
+            _year = breakdown.tm_year + 1900;
+        }
+    }
+
+
+    void Date::print(std::ostream& out) {
         out << _day << "/" << _month << "/" << _year << "\n";
     }
 
@@ -67,8 +86,7 @@ namespace util {
         time_t t;
         t = time(nullptr);
 
-        tm breakdown;
-        breakdown = *localtime(&t);
+        tm breakdown = *localtime(&t);
         int currDay = breakdown.tm_mday;
         int currMonth = breakdown.tm_mon + 1;
         int currYear = breakdown.tm_year + 1900;

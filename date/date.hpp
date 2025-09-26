@@ -24,10 +24,10 @@ namespace util {
         void year(int value);
         int year();
 
-
+        void advance(int days = 1);
         
 
-        void PrintDate(std::ostream& out);
+        void print(std::ostream& out);
 
 
         private:

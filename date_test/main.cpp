@@ -33,32 +33,73 @@ TEST(ValueCtor, InvalidDate){
 }
 
 TEST(Setters, SetValidDate){
-    std::ostringstream stream;
+    std::ostringstream out;
     Date d;
     d.day(25);
     d.month(12);
     d.year(2024);
 
-    d.PrintDate(stream);
-    EXPECT_EQ(stream.str(), "25/12/2024\n");
+    d.print(out);
+    EXPECT_EQ(out.str(), "25/12/2024\n");
 }
 
 TEST(Setters, SetInvalidDate) {
     Date x;
+        std::ostringstream out;
     try {
         x.day(25);
         x.month(13);
     }
     catch(Date::Invalid e) {
-        std::ostringstream eout;
-        eout << e.day << "/" << e.month << "/" << e.year << std::endl;
-        EXPECT_EQ(eout.str(), "25/13/1970\n");
+        out << e.day << "/" << e.month << "/" << e.year << std::endl;
+        EXPECT_EQ(out.str(), "25/13/1970\n");
+    }
+
+    out.str("");
+    
+    try {
+        x.day(29);
+        x.month(2);
+    }
+    catch(Date::Invalid e) {
+        out << e.day << "/" << e.month << "/" << e.year << std::endl;
+        EXPECT_EQ(out.str(), "29/2/1970\n");
     }
 }
 
 TEST(Now, ReturnsCorrectTime) {
     std::ostringstream out;
     Date today = Date::now();
-    today.PrintDate(out);
+    today.print(out);
     EXPECT_EQ(out.str(), "25/9/2025\n");
+}
+
+TEST(advance, MovesForward) {
+    std::ostringstream out;
+    Date d{6, 4, 2005};
+
+    d.advance();
+    d.print(out);
+    EXPECT_EQ(out.str(), "7/4/2005\n");
+
+    out.str("");
+
+    d.advance(389);
+    d.print(out);
+    EXPECT_EQ(out.str(), "1/5/2006\n");
+}
+
+TEST(advance, MovesBackwards){
+    std::ostringstream out;
+    Date d{6, 4, 2005};
+
+    d.advance(-5);
+    d.print(out);
+    EXPECT_EQ(out.str(), "1/4/2005\n");
+
+    out.str("");
+
+    d.advance(-366);
+    d.print(out);
+    EXPECT_EQ(out.str(), "31/3/2004\n");
 }
