@@ -121,14 +121,14 @@ std::string Date::dayName() const {
 
     void Date::print(std::ostream& out) const{
         if (order == Order::MonthDayYear) {
-            out << _month << separator << _day << separator << _year << "\n";
+            out << _month << separator << _day << separator << _year;
         }
         else {
             if (order == Order::DayMonthYear) {
-                out << _day << separator << _month << separator << _year << "\n";
+                out << _day << separator << _month << separator << _year;
             }
             else {
-                out << _year << separator << _month << separator << _day << "\n";
+                out << _year << separator << _month << separator << _day;
             }
         }
         
