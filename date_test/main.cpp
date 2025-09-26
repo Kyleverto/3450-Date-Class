@@ -32,7 +32,7 @@ TEST(ValueCtor, InvalidDate){
     }
 }
 
-TEST(print, CorrectFormat){
+TEST(Print, CorrectFormat){
     std::ostringstream out;
     Date d{25, 12, 2024};
     d.print(out);
@@ -62,8 +62,10 @@ TEST(Setters, SetValidDate){
     d.month(12);
     d.year(2024);
 
-    d.print(out);
-    EXPECT_EQ(out.str(), "12/25/2024\n");
+    EXPECT_EQ(d.day(), 25);
+    EXPECT_EQ(d.month(), 12);
+    EXPECT_EQ(d.year(), 2024);
+
 }
 
 TEST(Setters, SetInvalidDate) {
@@ -94,10 +96,18 @@ TEST(Now, ReturnsCorrectTime) {
     std::ostringstream out;
     Date today = Date::now();
     today.print(out);
-    EXPECT_EQ(out.str(), "9/25/2025\n");
+    EXPECT_EQ(out.str(), "9/26/2025\n");
 }
 
-TEST(advance, MovesForward) {
+TEST(Props, CorrectDayAndMonth){
+    Date d = Date::now();
+    std::ostringstream out;
+
+    out << d.dayName() << ", " << d.monthName() << " " << d.day() << std::endl;
+    EXPECT_EQ(out.str(), "Friday, September 26\n");
+}
+
+TEST(Advance, MovesForward) {
     std::ostringstream out;
     Date d{6, 4, 2005};
 
@@ -112,7 +122,7 @@ TEST(advance, MovesForward) {
     EXPECT_EQ(out.str(), "5/1/2006\n");
 }
 
-TEST(advance, MovesBackwards){
+TEST(Advance, MovesBackwards){
     std::ostringstream out;
     Date d{6, 4, 2005};
 

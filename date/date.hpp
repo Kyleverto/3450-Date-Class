@@ -26,18 +26,21 @@ namespace util {
 
 
         void day(int value);
-        int day();
+        int day() const;
 
         void month(int value);
-        int month();
+        int month() const;
 
         void year(int value);
-        int year();
+        int year() const;
 
         void advance(int days = 1);
         
+        std::string monthName() const;
+        std::string dayName() const;
 
-        void print(std::ostream& out);
+        void print(std::ostream& out) const;
+
 
 
         private:
